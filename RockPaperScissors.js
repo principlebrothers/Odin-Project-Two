@@ -11,7 +11,7 @@ function computerPlay(){
     }else if(finalAnswer < 1){
         comOption = "scissors";
     }
-    return comOption;
+    return comOption; 
 }
 
 function playerChoice() {
@@ -63,24 +63,40 @@ function playRound(comOption, playerChoice){
 
 function game(){
     let results = "";
-    let resultsArray = [];
-    resultsArray.sort();
+    let comWinArray = [];
+    let playerWinArray = [];
+    let drawArray = [];
+    let invalidResult = [];
 
     let playTime = parseInt(prompt("Enter number of times to play: "))
     if(Number.isInteger(playTime)){
         for(let count = 0; count < playTime; count++){
             results = (playRound(computerPlay(), playerChoice()));
-            resultsArray.push(results)
+            if(results === "COMPUTER WIN! rock beats scissors" || results === "COMPUTER WIN! scissors beats paper" || results === "COMPUTER WIN! paper beats rock"){
+                comWinArray.push(results);
+            }
+            else if(results === "YOU WIN! rock beats scissors" || results === "YOU WIN! scissors beats paper" || results === "YOU WIN! paper beats rock"){
+                playerWinArray.push(results);
+            }
+            else if(results === "TIE"){
+                drawArray.push(results);
+            }else{invalidResult.push(results)}
         }
-        //return resultsArray;
 
-        let map = resultsArray.reduce(function(prev, cur) {
-            prev[cur] = (prev[cur] || 0) + 1;
-            return prev;
-          }, {});
-          
-          // map is an associative array mapping the elements to their frequency:
-          return map;
+        console.log(`Invalid entry ${invalidResult.length}`);
+        console.log(`You win ${playerWinArray.length}`);
+        console.log(`Computer Win ${comWinArray.length}`);
+        console.log(`Draw ${drawArray.length}`);
+        
+
+        if(comWinArray.length > playerWinArray.length || comWinArray.length === playTime){
+            console.log("\t\t***COMPUTER WIN***");
+        }else if(playerWinArray.length > comWinArray.length || playerWinArray.length === playTime){
+            console.log("\t\t***YOU WIN***");
+        }else if(drawArray.length > comWinArray.length && drawArray.length > playerWinArray.length || drawArray.length === comWinArray.length && drawArray.length === playerWinArray.length || drawArray.length === playTime){
+            console.log("\t\t***IT A DRAW GAME***");
+        }else if(invalidResult.length > comWinArray.length && invalidResult.length >playerWinArray.length ||invalidResult.length === playTime){console.log("\t\t***INVALID INPUTS***");}
+
 
     }else{ return "ENTRY IS NOT A NUMBER";}
     
