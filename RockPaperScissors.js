@@ -1,5 +1,5 @@
 
-//Computer player argorithm
+//Computer player algorithm
 function computerPlay(){
     let comOption = "";
     const guess = Math.floor(Math.random()*10)+1;
@@ -14,6 +14,7 @@ function computerPlay(){
     return comOption; 
 }
 
+// Player algorithm
 function playerChoice() {
     let moveList = ['rock', 'paper', 'scissors']
     let choice;
@@ -61,7 +62,8 @@ function playRound(comOption, playerChoice){
     
 }
 
-function game(){
+//Multiple play function
+/*function game(){
     let results = "";
     let comWinArray = [];
     let playerWinArray = [];
@@ -100,7 +102,6 @@ function game(){
 
     }else{ return "ENTRY IS NOT A NUMBER";}
     
-}
+}*/
 
-console.log(game());
 
