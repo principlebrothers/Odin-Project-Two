@@ -1,7 +1,39 @@
+const buttons = document.querySelectorAll('button');
+const comOutput = document.getElementById('comOutput');
+let playerOut = document.getElementById('playerOutput');
+let youWin = document.getElementById('youWin');
+let draw = document.getElementById('draw');
+let comWin = document.getElementById('comWin');
+let explainedOutput = document.getElementById('explained_output');
+let overallWinner = document.getElementById('overallWinner');
+let gameRoundDisplay = document.querySelector('.gameRounds');
+let playerChoice;
+let comOption;
+let declareResult;
+let results = "";
+let comWinArray = [];
+let playerWinArray = [];
+let drawArray = [];
+let count = 0;
+let resultLimit = 5;
+
+
+
+buttons.forEach((button)=>{
+  button.addEventListener('click',(e)=>{
+    playerChoice = button.id // is the same as e.target.id
+    playerOut.textContent = `YOUR CHOICE: ${playerChoice}`;
+    count++
+    gameRoundDisplay.textContent =`ROUND: ${count}`
+    computerPlay();
+    //playRound(comOption, playerChoice)
+    game();
+    
+  });
+});
 
 //Computer player algorithm
 function computerPlay(){
-    let comOption = "";
     const guess = Math.floor(Math.random()*10)+1;
     let finalAnswer = guess % 3;
     if(finalAnswer > 1){
@@ -11,25 +43,18 @@ function computerPlay(){
     }else if(finalAnswer < 1){
         comOption = "scissors";
     }
-    return comOption; 
+   comOutput.textContent = `COMPUTER'S CHOICE: ${comOption}`; 
 }
 
-// Player algorithm
-function playerChoice() {
-    let moveList = ['rock', 'paper', 'scissors']
-    let choice;
-    let move = prompt("What do you move? (i.e. rock, paper or scissors)").toLowerCase();
-    if (moveList.indexOf(move) != -1){
-      choice = move;
-    }else{choice = "Invalid Input"}
-    return choice;
-}
+// //Rounds count
+// function countUp(){
+//     count.textContent++;
+// }
 
 //Single round function
 function playRound(comOption, playerChoice){
-    let declareResult;
-    let computerWin = `COMPUTER WIN! ${comOption} beats ${playerChoice}`;
-    let youWin = `YOU WIN! ${playerChoice} beats ${comOption}`;
+    const computerWin = `COMPUTER WIN: ${comOption} beats ${playerChoice}`;
+    const youWin = `YOU WIN: ${playerChoice} beats ${comOption}`;
     
     if(playerChoice == "scissors" && comOption == "paper"){
         declareResult = youWin;
@@ -54,54 +79,42 @@ function playRound(comOption, playerChoice){
     else if(comOption === playerChoice){
             declareResult = `TIE`;
     }
-    else{
-        declareResult = `INVALID INPUT`
-    }
     
+    explainedOutput.textContent = declareResult;
     return declareResult;
+}
+
+// Function for result display
+function game(){
+    
+    if(comWinArray.length !== resultLimit || playerWinArray.length !== resultLimit || drawArray.length !== resultLimit){
+        results = playRound(comOption, playerChoice);
+        if(results === "COMPUTER WIN: rock beats scissors" || results === "COMPUTER WIN: scissors beats paper" || results === "COMPUTER WIN: paper beats rock"){
+            comWinArray.push(results);
+        }
+        else if(results === "YOU WIN: rock beats scissors" || results === "YOU WIN: scissors beats paper" || results === "YOU WIN: paper beats rock"){
+            playerWinArray.push(results);
+        }
+        else if(results === "TIE"){
+            drawArray.push(results);
+        }
+    }
+    if(comWinArray.length === resultLimit){
+        overallWinner.textContent = 'COMPUTER WIN';
+    }
+    if(playerWinArray.length === resultLimit){
+        overallWinner.textContent = 'YOU WIN';
+    }   
+    if(drawArray.length === resultLimit){
+        overallWinner.textContent = 'DRAW GAME';
+    }
+    //console.log(`Invalid entry ${invalidResult.length}`);
+    youWin.textContent = `YOUR SCORE: ${playerWinArray.length}`;
+    draw.textContent = `DRAW: ${drawArray.length}`;
+    comWin.textContent = `COMPUTER SCORE: ${comWinArray.length}`
     
 }
 
-//Multiple play function
-/*function game(){
-    let results = "";
-    let comWinArray = [];
-    let playerWinArray = [];
-    let drawArray = [];
-    let invalidResult = [];
-
-    let playTime = parseInt(prompt("Enter number of times to play: "))
-    if(Number.isInteger(playTime)){
-        for(let count = 0; count < playTime; count++){
-            results = (playRound(computerPlay(), playerChoice()));
-            if(results === "COMPUTER WIN! rock beats scissors" || results === "COMPUTER WIN! scissors beats paper" || results === "COMPUTER WIN! paper beats rock"){
-                comWinArray.push(results);
-            }
-            else if(results === "YOU WIN! rock beats scissors" || results === "YOU WIN! scissors beats paper" || results === "YOU WIN! paper beats rock"){
-                playerWinArray.push(results);
-            }
-            else if(results === "TIE"){
-                drawArray.push(results);
-            }else{invalidResult.push(results)}
-        }
-
-        console.log(`Invalid entry ${invalidResult.length}`);
-        console.log(`You win ${playerWinArray.length}`);
-        console.log(`Computer Win ${comWinArray.length}`);
-        console.log(`Draw ${drawArray.length}`);
-        
-
-        if(comWinArray.length > playerWinArray.length || comWinArray.length === playTime){
-            console.log("\t\t***COMPUTER WIN***");
-        }else if(playerWinArray.length > comWinArray.length || playerWinArray.length === playTime){
-            console.log("\t\t***YOU WIN***");
-        }else if(drawArray.length > comWinArray.length && drawArray.length > playerWinArray.length || drawArray.length === comWinArray.length && drawArray.length === playerWinArray.length || drawArray.length === playTime){
-            console.log("\t\t***IT A DRAW GAME***");
-        }else if(invalidResult.length > comWinArray.length && invalidResult.length >playerWinArray.length ||invalidResult.length === playTime){console.log("\t\t***INVALID INPUTS***");}
 
 
-    }else{ return "ENTRY IS NOT A NUMBER";}
-    
-}*/
-
-
+ 

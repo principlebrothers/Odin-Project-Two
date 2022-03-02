@@ -5,9 +5,48 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rock Paper Scissors</title>
+    <link href="rps_ui.css" type="text/css" rel="stylesheet">
 </head>
 <body>
-  
+    <div class="container">
+        <div class="header">
+          <h1>ROCK PAPER SCISSORS GAME</h1>
+          <h3>Select rock, paper or scissors to play with computer</h3>
+        </div>
+
+        <div class="result_tab">
+          <div id="youWin"></div>
+          <div id="draw"></div>
+          <div id="comWin"></div>
+        </div>
+
+        <div class="final_declaration">
+          <div class="gameRounds"></div>
+          <div id="overallWinner"></div>
+        </div>
+
+        <div class="button_container">
+            <button id="rock">ROCK</button>
+            <button id="paper">PAPER</button>
+            <button id="scissors">SCISSORS</button>
+          </div>
+        
+        <div class="output_container">
+          <div id="comOutput"></div>
+          <div id="playerOutput"></div>
+          <div id="explained_output"></div>
+        </div>
+
+        <div class="resetBtn">
+          <button id="restart" onclick="window.location.reload()"> RESET </button>
+        </div>
+        
+    </div>
+    
+    <footer>
+      <h3>Copyright &copy; Tech Trends 2022</h3>
+    </footer>
+
     <script src="RockPaperScissors.js"></script>
 </body>
 </html>
